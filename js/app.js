@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Audio Toggle
     initAudioControls();
 
+    // Initialize 3D Visual FX Mode Toggle
+    init3DFXControls(cyberCanvas);
+
     // Initialize 3D Tabs
     init3DTabs(cyberCanvas);
 
@@ -40,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ----------------------------------------------------
-// 1. Audio Controls
+// 1. Audio & 3D Visual FX Controls
 // ----------------------------------------------------
 function initAudioControls() {
     const audioBtn = document.getElementById('audio-toggle-btn');
@@ -56,6 +59,18 @@ function initAudioControls() {
                 : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
         }
         showToast(isMuted ? 'Audio SFX Muted' : 'Audio SFX Enabled');
+    });
+}
+
+function init3DFXControls(cyberCanvas) {
+    const fxBtn = document.getElementById('canvas-3d-mode-btn');
+    if (!fxBtn || !cyberCanvas) return;
+
+    fxBtn.addEventListener('click', () => {
+        const newMode = cyberCanvas.cycleMode();
+        fxBtn.classList.toggle('mode-active', cyberCanvas.currentModeIndex > 0);
+        window.soundCtrl?.click();
+        showToast(`3D Mode: ${newMode}`);
     });
 }
 
@@ -433,6 +448,7 @@ function initContactConsole() {
     // Intent Fast-Track Message Templates
     const templates = {
         'web-dev': "Hello Ebin,\n\nWe have a website / web application project and would like to consult with you on development, architecture, and timeline.\n\nProject details:",
+        'meta-ads': "Hi Ebin,\n\nI want to enquire about your Run Meta Ads service (Facebook & Instagram Ads). We are looking to run high-converting ad campaigns, acquire targeted leads, and maximize ROAS for our business.\n\nBusiness & Ad Budget details:",
         'marketing': "Hello Ebin,\n\nWe are looking to scale our digital presence through Technical SEO and performance marketing funnels.\n\nOur current goals:",
         'hiring': "Hi Ebin,\n\nWe came across your profile and IQVIA background. We have an engineering opening and would love to schedule an interview with you.\n\nRole & Company:",
         'freelance': "Hi Ebin,\n\nI have a freelance contracting opportunity and would love to discuss your availability and rates.\n\nOverview:"
